@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color:rgb(72, 103, 243);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.container {
+    /* background-color:  #63c6f3; */
+    background-image:  url(./oliver-hae-h3pU3m-Eduk-unsplash.jpg);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    padding: 20px;
+    padding-right: 20px;
+    width: 350px;
+    text-align: center;
+    margin-top: 50px;
+    box-shadow: 8px 6px 8px rgb(0.2, 0.2, 0.2, 0.2);
+}
+
+.container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+.container #showque{
+    text-align: none;
+}
+</style>
+<body>
+    <div class="container">
+        <div id="showque"></div>
+    <br>
+    <button id="preBtn" onclick="prev()">Previous</button>
+    <button  id="netBtn"onclick="next()">Next</button>
+    <button onclick="submit()" id="scoreBtn">Submit</button>
+    </div>
+    
+</body>
+<script>
+   
+   
+
+
+ let arrObject = [
+        {
+            
+            question:"1 What is your Favorite color",
+            option: [ "red","blue","green", "orange"],
+            answer: "blue"
+        },
+        {
+             question:"2 Where is your Favorite country",
+            option: [ "Nigeria","England","Germany", "Paris"],
+            Aanswer: "Nigeria",
+        },
+        {
+             question:"3 What is your Favorite Food",
+            option: [ "Eba","Beans","Jollof Rice", "Amala"],
+            answer: "Beans",
+        },
+        {
+             question:"4. What is your Favorite social media platform",
+            option: [ "Instagram","FcaeBook","Whatsapp", "X"],
+            answer: "Instagram",
+        }
+    ]
+    let showque = document.getElementById("showque")
+    let preBtn =  document.getElementById("preBtn")
+    let scoreBtn =  document.getElementById("scoreBtn")
+     let score = 0
+     let pickedAns = []
+    let netBtn =  document.getElementById("netBtn")
+    preBtn.setAttribute("disabled",true)
+    scoreBtn.style.display = "none"
+     let currentIndex = 0
+    let arrObj = arrObject[currentIndex]
+    let questionObject = arrObj
+    
+    function display(){
+        showque.innerHTML = `<h2> Question:${ questionObject.question}</h2> ` ;
+         questionObject.option.forEach((el)=>{
+            showque.innerHTML += `<input  onchange = "pickAns(event)" value= "${el}" name= "dan" type= "radio"/>
+                                  <span>${el}</span> <br>`
+         }) 
+    }
+    display()
+
+    function next(){
+        preBtn.removeAttribute("disabled")
+        if (currentIndex == arrObject.length  -1){
+            netBtn.style.display= "none"
+        scoreBtn.style.display = "initial"    
+        }
+            currentIndex++; 
+             questionObject = arrObject[currentIndex];
+            display();
+        }
+        
+        
+
+
+    function prev(){
+            currentIndex--;  
+        if (currentIndex == 0) {
+            preBtn.setAttribute("disabled",true);
+        }else{}
+        questionObject = arrObject[currentIndex];
+        display()
+    }
+
+    function submit(){
+        arrObject.forEach((el,i)=>{
+            if(el.answer == pickedAns[i]){
+                score++
+            }
+        })
+        alert(`You scored ${score} out of ${arrObject.length}`)
+    }
+    
+    function pickAns(event) {
+        let selectedAnswer = event.target.value
+        pickedAns[currentIndex] = selectedAnswer    
+    }
+    
+    setTimeout(()=>{
+        // showque.innerHTML = `TIME IS UP TRY AGAIN LATER <br> You scored ${score} out of ${arrObject.length}`
+        showque.innerHTML = `TIME IS UP<br> TRY AGAIN LATER <br>`
+        submit()
+        preBtn.style.display = "none";
+        netBtn.style.display = "none";
+        scoreBtn.style.display = "none"
+     },10000)
+
+    
+ // if (selectedAnswer === null){
+            // alert("pick an option")
+            // return;  
+</script>
+</html>
